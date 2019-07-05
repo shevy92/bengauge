@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Gauge Visualization</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta charset='utf-8' />
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <style>
+        text {
+          font-family: "Helvetica", sans-serif;
+        }
+        #chart {
+          width: 250px;
+            height: 150px;
+        }
+        h4 {
+            width: 250px;
+            margin-top: -10px;
+            text-align: center;
+            font-family: "Helvetica", sans-serif;
+            font-size: 13px;
+        }
+        button {
+            background-color: #eb4849;
+            border: none;
+            padding: 5px 15px 5px 15px;
+            color: white;
+        }
+        .buttons {
+            margin: 0 auto;
+            margin-left: 66px;
+        }
+        text.arc-label {
+            color: green !important;
+        }
+        .boldStyle {
+            font-weight: bold;
+            border: 2px solid gray;
+        }
+        #main {
+            width: 20%;
+            margin: 0 auto;
+        }
+    </style>
+  </head>
+  <body>
+   <div id="main">
+        <div class="buttons">
+           <button id="random">2009</button>
+           <button id="random2">2017</button>
+        </div>
+
+        <div id="chart"> </div>
+        <h4 id="label">Ambulance rides<br> per 1,000 people</h4>
+    </div>
+    
+   
+    <script src="script.js"></script>
+    <script>
+        
+    var poop = true;
+        
+    function randNumberBounds(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+        if (poop === true) {
+            console.log("2009");
+            return 17;
+        } else {
+            console.log("2017");
+            return 9;
+        }
+      
+    }
+    function randNumberBounds2(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+        console.log("two");
+      return 9;
+    }
+
+    (function() {
+      var gauge = gaugeChart()
+        .width(260)
+        .height(200)
+        .innerRadius(50)
+        .outerRadius(80);
+
+      d3.select("#chart").datum([randNumberBounds(0, 20)]).call(gauge);
+
+      function resize() {
+        var gWidth = Math.min(d3.select("#chart").node().offsetWidth, 260);
+        gauge.width(gWidth).innerRadius(gWidth / 4).outerRadius((gWidth / 4) + 40);
+        d3.select("#chart").call(gauge);
+      }
+
+      resize();
+      window.addEventListener("resize", resize);
+
+      var button = document.getElementById("random");
+      button.addEventListener("click", function() {
+        poop = true;
+        d3.select("#chart").datum([randNumberBounds(0, 20)]).call(gauge);
+        button.classList.add("boldStyle");
+        button2.classList.remove("boldStyle");
+      });
+        
+      var button2 = document.getElementById("random2");
+        poop = false;
+      button2.addEventListener("click", function() {
+          poop = false;
+        d3.select("#chart").datum([randNumberBounds(0, 20)]).call(gauge);
+          button2.classList.add("boldStyle");
+        button.classList.remove("boldStyle");
+      });
+        
+    
+        
+    })()
+    </script>
+</body>
+</html>
